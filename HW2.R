@@ -7,11 +7,12 @@
 
 mydata <- read.csv("vaccinedata.csv")
 #creating a new data set to draw vertical lines for the time points that vaccines were licenced
+library(tidyverse)
 vline.data <- data.frame(z = c(1995, 1947, 1995, 1981, 1963, 1967, 1949, 1955, 1969), 
                          disease = c("Chickenpox", "Diphtheria", "Hepatitis A", 
                                      "Hepatitis B",
                                      "Measles", "Mumps", "Pertussis", "Polio", "Rubella"))
-p1 <- ggplot(data = mydata2, aes(x = year, y = cases, text = vaccine, group = disease)) +
+p1 <- ggplot(data = mydata, aes(x = year, y = cases, text = vaccine, group = disease)) +
   geom_line() + facet_wrap(~ disease, scales = "free_y") + #I decided to choose a free y axis because the magnitude of each disease was different and using equal scales could result in being misled.
   scale_x_continuous(breaks = c(1940, 1960, 1980, 2000, 2020), labels= c('1940', '1960','1980','2000', '2020')) + theme_bw() +
   scale_y_continuous(name="cases", labels = scales::comma) + #I couldn't find a code to adjust the y axis to have equal number of breaks and gridlines for all graphs

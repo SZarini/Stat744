@@ -84,3 +84,4 @@ sg_annotate(sgg1, label = "test", x = 1961, y = 100000, color = "black", size = 
 #I believe the streamgraph shows the overall trend in a way that it would be easier and faster for the observer to see the changes and efficacy of vaccines. 
 #However, some details are lost, such as the exact number of cases because of the data transformation. An alternative would be the interactive streamplot without data transformation,
 #but because the magnitude of the disease is so different then those with low number of cases won't be readable.
+#The linegraphs show the trend more accurately but at a cost of not being as collective as the streamgraph.

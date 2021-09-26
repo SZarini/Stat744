@@ -5,38 +5,59 @@
 
 #For the first graph I decided to create multiple linegraphs using facet_wrap code to show the trends of each disease:
 
-mydata <- read.csv("vaccinedata.csv")
-#creating a new data set to draw vertical lines for the time points that vaccines were licenced
 library(tidyverse)
-vline.data <- data.frame(z = c(1995, 1947, 1995, 1981, 1963, 1967, 1949, 1955, 1969), 
-                         disease = c("Chickenpox", "Diphtheria", "Hepatitis A", 
-                                     "Hepatitis B",
-                                     "Measles", "Mumps", "Pertussis", "Polio", "Rubella"))
-p1 <- ggplot(data = mydata, aes(x = year, y = cases, text = vaccine, group = disease)) +
-  geom_line() + facet_wrap(~ disease, scales = "free_y") + #I decided to choose a free y axis because the magnitude of each disease was different and using equal scales could result in being misled.
-  scale_x_continuous(breaks = c(1940, 1960, 1980, 2000, 2020), labels= c('1940', '1960','1980','2000', '2020')) + theme_bw() +
-  scale_y_continuous(name="cases", labels = scales::comma) + #I couldn't find a code to adjust the y axis to have equal number of breaks and gridlines for all graphs
-  geom_vline(aes(xintercept = z), vline.data, colour = "blue")
+mydata <- read.csv("vaccinedata.csv")
+
+#creating a new data set to mark the vaccine licencing incidents:
+
+point.data <- data.frame(year = c(1995, 1947, 1995, 2005, 1981, 1991, 1963,
+                                  1967, 1949, 1955, 1961, 1969),
+                         cases = c(120624, 12262, 31582, 4488, 21152, 18003, 385156, 0, 69479, 28985, 1312, 57686),
+                         disease = c("Chickenpox", "Diphtheria", "Hepatitis A","Hepatitis A", 
+                                     "Hepatitis B", "Hepatitis B", "Measles",
+                                     "Mumps", "Pertussis", "Polio", "Polio", "Rubella"),
+                         vaccine = c("Chickenpox vaccine is licensed and added to the routine childhood vaccine schedule.",
+                                     "Diphtheria toxoid is part of DT, the first combination childhood vaccine licensed.",
+                                     "Hepatitis A vaccine is licensed. CDC recommends it for children in high-risk communities.",
+                                     "CDC extends hepatitis A vaccine recommendation to all children.",
+                                     "Hepatitis B vaccine licensed. Initially used in high-risk groups like babies of infected mothers.",
+                                     "CDC expands hepatitis B vaccine recommendation to all infants.",
+                                     "The first measles vaccines are licensed.",
+                                     "Mumps vaccine is licensed.",
+                                     "Pertussis vaccine is part of first DTP childhood vaccine licensed.",
+                                     "Jonas Salk's injectable polio vaccine is the first licensed. It uses killed virus.",
+                                     "Albert Sabin's oral polio vaccine is licensed. It uses live, weakened virus.",
+                                     "The first rubella vaccines licensed and recommended for all children."))
 
 
-#I wanted to create another argument to add second line for diseases that had second vaccine types but ran out of time
-#I tried to create a new data set for text and use geom_text to add labels for events inside each graph but the code didn't work:
-text.data <- data.frame(
-  label = c("Chickenpox vaccine licenced", "Diphteria first vaccine licenced"),
-  disease = c("Chickenpox", "Diphteria"),
-  x = c(1980, 1980),
-  y = c(100000, 7500))
-p1 + geom_text(
-  data    = text.data,
-  mapping = aes(x = x, y = y, label = label))
+#Tried to erase the FALSE values from the text box (on the interactive graph). But is is showing as NA anyway.
+mydata2 <- mydata %>%
+  mutate(vaccine = na_if(vaccine, "FALSE"))
 
-#For the final step for this graph after adding the notes and adjusting the y axis I would like to make it interactive using ggplotly:
+
+p1 <- ggplot(data = mydata2, aes(x = year, y = cases,
+                                text = vaccine, group = disease)) +
+  geom_line() +
+  facet_wrap(~ disease, scales = "free") + #I decided to choose free x and y axis because the magnitude and timeline of each disease was different and using equal scales could result in being misled.
+  scale_x_continuous(breaks = c(1940, 1960, 1980, 2000, 2020),
+                     labels= c('1940', '1960','1980','2000', '2020')) +
+  theme_bw() +
+  scale_y_continuous(name="cases", labels = scales::comma) + #I couldn't find a code to adjust the x and y axis to have equal number of breaks and gridlines for all graphs. I tried the "scales::pretty_breaks()" command but it didn't work.
+  geom_point(data=point.data2,aes(x = year, y = cases))+
+  labs(title = "THE VACCINE WARS",
+       x = "Year", y = "Cases")
+
+
+
+#For the final step I decided to make the graph interactive by using ggplotly:
+
 install.packages("plotly")
 library(plotly)
-ggplotly(p1) 
-#This way the reader can check the exact case number for each year by moving the cursor
-#Each event will also be displayed by putting the cursor on interaction point of the vertical line with the linegraph
-#I think it might have been better to use dots instead of vertical lines for vaccine events but I couldn't find the right code in time
+ggplotly(p1)
+
+#This way the reader can check the exact case number for each year by moving the cursor.
+#Each event will also be displayed by putting the cursor on the dots.
+
 
 #For the second graph I decided to create a streamgraph to show the overall efficacy of vaccines in controlling diseases:
 
@@ -46,6 +67,7 @@ library(cowplot)
 library(paletteer)
 library(dplyr)
 library(colorspace)
+library(ggstream)
 
 #This code takes a little longer to run
 gstream1 <- mydata %>%
@@ -71,6 +93,8 @@ gstream1 <- mydata %>%
            colour = "black", size = 1)+
   geom_label(label="Diphteria vaccine licenced",x=1950,y=790,label.padding = unit(0.25,"lines"),
              label.size=0.20,colour="black",fill="grey")
+
+
 #I also tried to make an interactive streamgraph but the labeling code for this graph didn't work:
 
 devtools::install_github("hrbrmstr/streamgraph")
@@ -83,5 +107,5 @@ sg_annotate(sgg1, label = "test", x = 1961, y = 100000, color = "black", size = 
 
 #I believe the streamgraph shows the overall trend in a way that it would be easier and faster for the observer to see the changes and efficacy of vaccines. 
 #However, some details are lost, such as the exact number of cases because of the data transformation. An alternative would be the interactive streamplot without data transformation,
-#but because the magnitude of the disease is so different then those with low number of cases won't be readable.
+#but because the magnitudes of the diseases are so different then those with low number of cases won't be visible.
 #The linegraphs show the trend more accurately but at a cost of not being as collective as the streamgraph.

@@ -78,6 +78,7 @@ gstream1 <- mydata %>%
   theme(legend.position = "none") +
   scale_colour_manual(values = paletteer::paletteer_d("dutchmasters::milkmaid") %>% colorspace::darken(.8)) +
   scale_fill_manual(values = paletteer::paletteer_d("dutchmasters::milkmaid") %>% colorspace::lighten(.2)) +
+  scale_x_continuous(breaks=seq(1940,2020,by=10))+
   labs(title = "THE VACCINE WARS",
        x = "Year",
        y = "Cases") + #I couldn't figure out how to adjust the position of the disease type direct labeling. A few are not well positioned. The Y axis is a little confusing here. I wasn't sure what would the best solution would be. Maybe totally removing it?
@@ -104,6 +105,30 @@ gstream1 <- mydata %>%
   annotate("segment", x = 1969, xend = 1967, y = -600, yend = -950,
            colour = "black", size = 1)+
   geom_label(label="Rubella vaccine licenced",x=1967,y=-970,label.padding = unit(0.25,"lines"),
+             label.size=0.20,colour="black",fill="grey")+
+  annotate("segment", x = 1967, xend = 1963, y = -200, yend = -150,
+           colour = "black", size = 1)+
+  geom_label(label="Mumps vaccine licenced",x=1960,y=-170,label.padding = unit(0.25,"lines"),
+             label.size=0.20,colour="black",fill="grey")+
+  annotate("segment", x = 1995, xend = 1995, y = 500, yend = 750,
+           colour = "black", size = 1)+
+  geom_label(label="Chickenpox vaccine licenced",x=1995,y=770,label.padding = unit(0.25,"lines"),
+             label.size=0.20,colour="black",fill="grey")+
+  annotate("segment", x = 1981, xend = 1981, y = -260, yend = -970,
+           colour = "black", size = 1)+
+  geom_label(label="Hepatits B licenced for high risk groups",x=1981,y=-990,label.padding = unit(0.25,"lines"),
+             label.size=0.20,colour="black",fill="grey")+
+  annotate("segment", x = 1991, xend = 1991, y = -275, yend = -860,
+           colour = "black", size = 1)+
+  geom_label(label="Hepatits B vaccine licenced for all infants",x=1991,y=-880,label.padding = unit(0.25,"lines"),
+             label.size=0.20,colour="black",fill="grey")+
+  annotate("segment", x = 1995, xend = 1998, y = -80, yend = -750,
+           colour = "black", size = 1)+
+  geom_label(label="Hepatits A licenced for high risk children",x=1999,y=-770,label.padding = unit(0.25,"lines"),
+             label.size=0.20,colour="black",fill="grey")+
+  annotate("segment", x = 2005, xend = 2007, y = 0, yend = -620,
+           colour = "black", size = 1)+
+  geom_label(label="Hepatits A vaccine licenced for all children",x=2007,y=-650,label.padding = unit(0.25,"lines"),
              label.size=0.20,colour="black",fill="grey")
   
 

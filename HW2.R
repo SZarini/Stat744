@@ -80,19 +80,32 @@ gstream1 <- mydata %>%
   scale_fill_manual(values = paletteer::paletteer_d("dutchmasters::milkmaid") %>% colorspace::lighten(.2)) +
   labs(title = "THE VACCINE WARS",
        x = "Year",
-       y = "Cases (square root)") + #I couldn't figure out how to adjust the position of the disease type direct labeling. A few are not well positioned.
+       y = "Cases") + #I couldn't figure out how to adjust the position of the disease type direct labeling. A few are not well positioned. The Y axis is a little confusing here. I wasn't sure what would the best solution would be. Maybe totally removing it?
   annotate("segment", x = 1955, xend = 1955, y = -500, yend = -850, #I couldn't find a code to automatically add labels for each vaccine event so I decided to add them manually but it is taking a very long time
            colour = "black", size = 1)+
   geom_label(label="First polio vaccine licenced",x=1955,y=-870,label.padding = unit(0.25,"lines"),
              label.size=0.20,colour="black",fill="grey") +
-  annotate("segment", x = 1961, xend = 1960, y = -440, yend = -750,
+  annotate("segment", x = 1961, xend = 1961, y = -440, yend = -750,
            colour = "black", size = 1)+
-  geom_label(label="Second polio vaccine licenced",x=1960,y=-770,label.padding = unit(0.25,"lines"),
+  geom_label(label="Second polio vaccine licenced",x=1962,y=-770,label.padding = unit(0.25,"lines"),
              label.size=0.20,colour="black",fill="grey") +
   annotate("segment", x = 1947, xend = 1950, y = 590, yend = 770,
            colour = "black", size = 1)+
   geom_label(label="Diphteria vaccine licenced",x=1950,y=790,label.padding = unit(0.25,"lines"),
+             label.size=0.20,colour="black",fill="grey")+
+  annotate("segment", x = 1963, xend = 1960, y = 200, yend = 660,
+           colour = "black", size = 1)+
+  geom_label(label="Measles vaccine licenced",x=1960,y=680,label.padding = unit(0.25,"lines"),
+             label.size=0.20,colour="black",fill="grey")+
+  annotate("segment", x = 1946, xend = 1946, y = -350, yend = -750,
+           colour = "black", size = 1)+
+  geom_label(label="Pertussis vaccine licenced",x=1948,y=-770,label.padding = unit(0.25,"lines"),
+             label.size=0.20,colour="black",fill="grey")+
+  annotate("segment", x = 1969, xend = 1967, y = -600, yend = -950,
+           colour = "black", size = 1)+
+  geom_label(label="Rubella vaccine licenced",x=1967,y=-970,label.padding = unit(0.25,"lines"),
              label.size=0.20,colour="black",fill="grey")
+  
 
 
 #I also tried to make an interactive streamgraph but the labeling code for this graph didn't work:
@@ -108,4 +121,4 @@ sg_annotate(sgg1, label = "test", x = 1961, y = 100000, color = "black", size = 
 #I believe the streamgraph shows the overall trend in a way that it would be easier and faster for the observer to see the changes and efficacy of vaccines. 
 #However, some details are lost, such as the exact number of cases because of the data transformation. An alternative would be the interactive streamplot without data transformation,
 #but because the magnitudes of the diseases are so different then those with low number of cases won't be visible.
-#The linegraphs show the trend more accurately but at a cost of not being as collective as the streamgraph.
+#The faceted linegraphs show the trend more accurately but at a cost of not being as collective as the streamgraph.However, their simple design might be very helpful in  

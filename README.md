@@ -14,3 +14,11 @@ Link to the paper: https://onlinelibrary.wiley.com/doi/full/10.1111/jfb.13756?ca
   The two lowest points in the high-contamination/sneaker category are a little surprising (i.e. don't agree very well with the regression line), I guess they're just dominated by lots of points in the larger ages?
 
 mark: 2.5/3
+
+HW2 graphs (interactive plots are not working here!):
+![P1](https://user-images.githubusercontent.com/90287945/134822187-49d2650b-83aa-4645-adeb-232d6d54a4f7.png)
+
+![Gstream1](https://user-images.githubusercontent.com/90287945/134822207-12773ebf-ac3c-4372-ab34-375a4118e5f4.png)
+
+![sgg1](https://user-images.githubusercontent.com/90287945/134822217-4731fb72-0b31-4ef1-a06e-17d6a43177b5.png)
+

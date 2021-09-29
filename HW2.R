@@ -16,10 +16,22 @@ library(streamgraph)
 #For the first graph I decided to create multiple linegraphs using facet_wrap code to show the trends of each disease:
 
 
+
 mydata <- read.csv("https://raw.githubusercontent.com/SZarini/Stat744/main/vaccinedata.csv")
+
+
+## JD: Script is not running, and for a simple reason (you don't define point.data2 in the script). Please update and get back to us.
+
+## JD: code should run when I download the repo; that means either:
+#### code downloads file, or
+#### file is in repo
+
+mydata <- read.csv("vaccinedata.csv")
+
 
 #creating a new data set to mark the vaccine licencing incidents:
 
+## JD: This much typing inside code makes me nervous; try to think of another way.
 point.data <- data.frame(year = c(1995, 1947, 1995, 2005, 1981, 1991, 1963,
                                   1967, 1949, 1955, 1961, 1969),
                          cases = c(120624, 12262, 31582, 4488, 21152, 18003, 385156, 0, 69479, 28985, 1312, 57686),
@@ -69,6 +81,15 @@ ggplotly(p1)
 
 
 #For the second graph I decided to create a streamgraph to show the overall efficacy of vaccines in controlling diseases:
+
+
+
+
+## JD: don't put install into your code; your code should be something that can be run blindly over and over. Also, people might install in different ways.
+## install.packages("ggstream")
+## install.packages("paletteer")
+
+## JD: It's usually good to have library statements up front, so script will crash near the beginning and people can download what they need.
 
 
 #This code takes a little longer to run

@@ -3,10 +3,20 @@
 
 #Jia You's graph is showing how the introduction and administration of vaccines successfully decreased case number of a lot of diseases throughout the history.
 
+library(tidyverse)
+library(cowplot)
+library(paletteer)
+library(dplyr)
+library(colorspace)
+library(ggstream)
+library(plotly)
+library(streamgraph)
+
+
 #For the first graph I decided to create multiple linegraphs using facet_wrap code to show the trends of each disease:
 
-library(tidyverse)
-mydata <- read.csv("vaccinedata.csv")
+
+mydata <- read.csv("https://raw.githubusercontent.com/SZarini/Stat744/main/vaccinedata.csv")
 
 #creating a new data set to mark the vaccine licencing incidents:
 
@@ -43,7 +53,7 @@ p1 <- ggplot(data = mydata2, aes(x = year, y = cases,
                      labels= c('1940', '1960','1980','2000', '2020')) +
   theme_bw() +
   scale_y_continuous(name="cases", labels = scales::comma) + #I couldn't find a code to adjust the x and y axis to have equal number of breaks and gridlines for all graphs. I tried the "scales::pretty_breaks()" command but it didn't work.
-  geom_point(data=point.data2,aes(x = year, y = cases))+
+  geom_point(data=point.data,aes(x = year, y = cases))+
   labs(title = "THE VACCINE WARS",
        x = "Year", y = "Cases")
 
@@ -51,8 +61,7 @@ p1 <- ggplot(data = mydata2, aes(x = year, y = cases,
 
 #For the final step I decided to make the graph interactive by using ggplotly:
 
-install.packages("plotly")
-library(plotly)
+
 ggplotly(p1)
 
 #This way the reader can check the exact case number for each year by moving the cursor.
@@ -61,13 +70,6 @@ ggplotly(p1)
 
 #For the second graph I decided to create a streamgraph to show the overall efficacy of vaccines in controlling diseases:
 
-install.packages("ggstream")
-install.packages("paletteer")
-library(cowplot)
-library(paletteer)
-library(dplyr)
-library(colorspace)
-library(ggstream)
 
 #This code takes a little longer to run
 gstream1 <- mydata %>%
@@ -135,15 +137,12 @@ gstream1 <- mydata %>%
 
 #I also tried to make an interactive streamgraph but the labeling code for this graph didn't work:
 
-devtools::install_github("hrbrmstr/streamgraph")
-install.packages("streamgraph")
-library(streamgraph)
 sgg1 <- streamgraph(mydata, key="disease", value="cases", date="year", height="600px", width="1000px") %>%
   sg_legend(show=TRUE, label="Disease: ")
 #I tried to label the events but the code didn't work:
 sg_annotate(sgg1, label = "test", x = 1961, y = 100000, color = "black", size = 12)
 
-#I believe the streamgraph shows the overall trend in a way that it would be easier and faster for the observer to see the changes and efficacy of vaccines. 
+#I believe the streamgraph shows the overall trend in a way that it would be easier and faster for the observer to see the changes in numbers and efficacy of vaccines. 
 #However, some details are lost, such as the exact number of cases because of the data transformation. An alternative would be the interactive streamplot without data transformation,
 #but because the magnitudes of the diseases are so different then those with low number of cases won't be visible.
-#The faceted linegraphs show the trend more accurately but at a cost of not being as collective as the streamgraph.However, their simple design might be very helpful in  
+#The faceted linegraphs show the trend more accurately but at a cost of not being as collective as the streamgraph.However, their simple design might be very helpful in conveying the information. 

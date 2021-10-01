@@ -32,25 +32,7 @@ mydata <- read.csv("vaccinedata.csv")
 #creating a new data set to mark the vaccine licencing incidents:
 
 ## JD: This much typing inside code makes me nervous; try to think of another way.
-point.data <- data.frame(year = c(1995, 1947, 1995, 2005, 1981, 1991, 1963,
-                                  1967, 1949, 1955, 1961, 1969),
-                         cases = c(120624, 12262, 31582, 4488, 21152, 18003, 385156, 0, 69479, 28985, 1312, 57686),
-                         disease = c("Chickenpox", "Diphtheria", "Hepatitis A","Hepatitis A", 
-                                     "Hepatitis B", "Hepatitis B", "Measles",
-                                     "Mumps", "Pertussis", "Polio", "Polio", "Rubella"),
-                         vaccine = c("Chickenpox vaccine is licensed and added to the routine childhood vaccine schedule.",
-                                     "Diphtheria toxoid is part of DT, the first combination childhood vaccine licensed.",
-                                     "Hepatitis A vaccine is licensed. CDC recommends it for children in high-risk communities.",
-                                     "CDC extends hepatitis A vaccine recommendation to all children.",
-                                     "Hepatitis B vaccine licensed. Initially used in high-risk groups like babies of infected mothers.",
-                                     "CDC expands hepatitis B vaccine recommendation to all infants.",
-                                     "The first measles vaccines are licensed.",
-                                     "Mumps vaccine is licensed.",
-                                     "Pertussis vaccine is part of first DTP childhood vaccine licensed.",
-                                     "Jonas Salk's injectable polio vaccine is the first licensed. It uses killed virus.",
-                                     "Albert Sabin's oral polio vaccine is licensed. It uses live, weakened virus.",
-                                     "The first rubella vaccines licensed and recommended for all children."))
-
+point.data <- mydata[c(9, 19, 44, 68, 74, 96, 115, 215, 304, 337, 344, 420),]
 
 #Tried to erase the FALSE values from the text box (on the interactive graph). But is is showing as NA anyway.
 mydata2 <- mydata %>%
@@ -95,7 +77,7 @@ ggplotly(p1)
 #This code takes a little longer to run
 gstream1 <- mydata %>%
   ggplot(aes(year, sqrt(cases), fill = disease, label = disease, color = disease)) + #I tried to plot the y axis on a log scale using "scale_y_log10()" but it resulted in some weird numbers
-  geom_stream(extra_span = 0.013, type = "mirror", n_grid = 3000, bw = .78) +
+  geom_stream(extra_span = 0.013, true_range = "none", type = "mirror", n_grid = 3000, bw = .78) +
   geom_stream_label(size = 5, type = "mirror", n_grid = 1000) +
   cowplot::theme_minimal_vgrid(font_size = 18) +
   theme(legend.position = "none") +

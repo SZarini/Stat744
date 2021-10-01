@@ -38,11 +38,12 @@ mydata2 <- mydata %>%
   mutate(vaccine = na_if(vaccine, "FALSE"))
 
 
+
 p1 <- ggplot(data = mydata2, aes(x = year, y = cases,
                                 text = vaccine, group = disease)) +
   geom_line() +
   facet_wrap(~ disease, scales = "free") + #I decided to choose free x and y axis because the magnitude and timeline of each disease was different and using equal scales could result in being misled.
-  scale_x_continuous(breaks = scales::pretty_breaks(3)) +
+  scale_x_continuous(breaks = scales::pretty_breaks(4)) +
   theme_bw() +
   scale_y_continuous(name="cases", labels = scales::comma, breaks = scales::pretty_breaks(4), limits = c(0, NA)) + #I couldn't find a code to adjust the x and y axis to have equal number of breaks and gridlines for all graphs. I tried the "scales::pretty_breaks()" command but it didn't work correctly.
   geom_point(data=point.data,aes(x = year, y = cases), colour='Blue')+

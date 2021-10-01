@@ -38,7 +38,9 @@ print(p1)
 p2 <- p1+facet_grid(. ~Season)
 print(p2)
 
-#Finally 
+#In the table the fish were divided into three categories based on their habitat (Benthic, Benthopelagic, and Pelagic). I decided to show fish from which habitat contributed most to the catch of specific gears.
+#It could be another important piece of information which could help scientists to choose the appropriate gear type for sampling their target species based on their habitat.
+
 p2 <- ggplot(data = hw3data, aes(x = Gear.Type, y = Catch, fill = Habitat)) +
                geom_bar(position = "fill",stat = "identity")+
   scale_y_continuous(labels = scales::percent_format())+

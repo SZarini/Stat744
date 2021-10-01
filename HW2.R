@@ -137,7 +137,7 @@ gstream1 <- mydata %>%
              label.size=0.20,colour="black",fill="grey")
   
 
-
+#I believe the better way was to have a change in saturation for each disease after the vaccine licencing date, instead of using lines to annotate but I couldn't find any code for that.
 #I also tried to make an interactive streamgraph but the labeling code for this graph didn't work:
 
 sgg1 <- streamgraph(mydata, key="disease", value="cases", date="year", height="600px", width="1000px") %>%

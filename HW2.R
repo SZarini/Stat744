@@ -26,7 +26,6 @@ mydata <- read.csv("https://raw.githubusercontent.com/SZarini/Stat744/main/vacci
 #### code downloads file, or
 #### file is in repo
 
-mydata <- read.csv("vaccinedata.csv")
 
 
 #creating a new data set to mark the vaccine licencing incidents:
@@ -43,13 +42,14 @@ p1 <- ggplot(data = mydata2, aes(x = year, y = cases,
                                 text = vaccine, group = disease)) +
   geom_line() +
   facet_wrap(~ disease, scales = "free") + #I decided to choose free x and y axis because the magnitude and timeline of each disease was different and using equal scales could result in being misled.
-  scale_x_continuous(breaks = c(1940, 1960, 1980, 2000, 2020),
-                     labels= c('1940', '1960','1980','2000', '2020')) +
+  scale_x_continuous(breaks = scales::pretty_breaks(3)) +
   theme_bw() +
-  scale_y_continuous(name="cases", labels = scales::comma) + #I couldn't find a code to adjust the x and y axis to have equal number of breaks and gridlines for all graphs. I tried the "scales::pretty_breaks()" command but it didn't work.
-  geom_point(data=point.data,aes(x = year, y = cases))+
+  scale_y_continuous(name="cases", labels = scales::comma, breaks = scales::pretty_breaks(4), limits = c(0, NA)) + #I couldn't find a code to adjust the x and y axis to have equal number of breaks and gridlines for all graphs. I tried the "scales::pretty_breaks()" command but it didn't work correctly.
+  geom_point(data=point.data,aes(x = year, y = cases), colour='Blue')+
   labs(title = "THE VACCINE WARS",
        x = "Year", y = "Cases")
+
+
 
 
 

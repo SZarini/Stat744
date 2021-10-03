@@ -50,7 +50,7 @@ p3 <- ggplot(data = hw3data, aes(x = Gear.Type, y = Catch, fill = Habitat)) +
   labs(title = "Gear and Habitat", x = "Gear type", y = "Catch rate")
  print(p3)
  
- #After reading chapter 10 of Wilke's book I think a side by side chart could be a better choice.       
+ #After reading chapter 10 of Wilke's book I think having side by side bars could be a better choice.       
 
   
 

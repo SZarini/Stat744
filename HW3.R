@@ -17,14 +17,14 @@ library(scales)
 #error: JAVA_HOME cannot be determined from the Registry
 
 
-#I made an excel file based on the data in the table: 
+#I made an excel file based on the data in the table:
 
 hw3data <- read.csv ("https://raw.githubusercontent.com/SZarini/Stat744/main/table-hw3.csv")
 
 #For the first graph I decided to show the total abundance of each species in the sampling location.
 #I think it wasn't easy to quickly order the most abundant and rare species by just looking at the table which could be a very important piece of data to look at.
 
-p1 <- ggplot(data = hw3data, aes(x = reorder(ï..Species, -Catch), y = Catch)) +
+p1 <- ggplot(data = hw3data, aes(x = reorder(Species, -Catch), y = Catch)) +
   geom_bar(stat = "identity")+
   scale_y_continuous(name="Count", breaks = seq(0, 700, by = 50))+
   theme_bw()+
@@ -38,6 +38,15 @@ print(p1)
 p2 <- p1+facet_grid(. ~Season)
 print(p2)
 
+## BMB: OK. It would be easier to compare summer vs winter this way ...
+
+ggplot(data = hw3data, aes(x=reorder(Species, -Catch), y = Catch)) +
+  geom_point(aes(colour=Season)) + coord_flip()
+
+## or this way ...
+ggplot(data = hw3data, aes(x=reorder(Species, -Catch), y = Catch)) +
+  geom_col(aes(fill=Season), position="dodge") + coord_flip()
+
 #In the table the fish were divided into three categories based on their habitat (Benthic, Benthopelagic, and Pelagic). I decided to show fish from which habitat contributed most to the catch of specific gears.
 #It could be another important piece of information which could help scientists to choose the appropriate gear type for sampling their target species based on their habitat.
 
@@ -49,8 +58,8 @@ p3 <- ggplot(data = hw3data, aes(x = Gear.Type, y = Catch, fill = Habitat)) +
   scale_fill_brewer(palette="Dark2")+
   labs(title = "Gear and Habitat", x = "Gear type", y = "Catch rate")
  print(p3)
- 
- #After reading chapter 10 of Wilke's book I think having side by side bars could be a better choice.       
 
-  
+ #After reading chapter 10 of Wilke's book I think having side by side bars could be a better choice.
+
+## BMB: fine.  Mark: 2.3/3
 

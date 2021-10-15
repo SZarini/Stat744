@@ -12,23 +12,10 @@ library(ggstream)
 library(plotly)
 library(streamgraph)
 
-
 #For the first graph I decided to create multiple linegraphs using facet_wrap code to show the trends of each disease:
 
 
-
 mydata <- read.csv("https://raw.githubusercontent.com/SZarini/Stat744/main/vaccinedata.csv")
-
-
-## JD: Script is not running, and for a simple reason (you don't define point.data2 in the script). Please update and get back to us.
-
-## JD: code should run when I download the repo; that means either:
-#### code downloads file, or
-#### file is in repo
-
-
-
-#creating a new data set to mark the vaccine licencing incidents:
 
 ## JD: This much typing inside code makes me nervous; try to think of another way.
 point.data <- mydata[c(9, 19, 44, 68, 74, 96, 115, 215, 304, 337, 344, 420),]
@@ -65,15 +52,7 @@ ggplotly(p1)
 
 #For the second graph I decided to create a streamgraph to show the overall efficacy of vaccines in controlling diseases:
 
-
-
-
-## JD: don't put install into your code; your code should be something that can be run blindly over and over. Also, people might install in different ways.
-## install.packages("ggstream")
-## install.packages("paletteer")
-
-## JD: It's usually good to have library statements up front, so script will crash near the beginning and people can download what they need.
-
+## JD: If you use a package that's not on CRAN (like streamgraph), it's good to tell us where to find it.
 
 #This code takes a little longer to run
 gstream1 <- mydata %>%
@@ -138,6 +117,8 @@ gstream1 <- mydata %>%
              label.size=0.20,colour="black",fill="grey")
   
 
+print(gstream1)
+
 #I believe the better way was to have a change in saturation for each disease after the vaccine licencing date, instead of using lines to annotate but I couldn't find any code for that.
 #I also tried to make an interactive streamgraph but the labeling code for this graph didn't work:
 
@@ -146,7 +127,11 @@ sgg1 <- streamgraph(mydata, key="disease", value="cases", date="year", height="6
 #I tried to label the events but the code didn't work:
 sg_annotate(sgg1, label = "test", x = 1961, y = 100000, color = "black", size = 12)
 
+print(sgg1)
+
 #I believe the streamgraph shows the overall trend in a way that it would be easier and faster for the observer to see the changes in numbers and efficacy of vaccines. 
 #However, some details are lost, such as the exact number of cases because of the data transformation. An alternative would be the interactive streamplot without data transformation,
 #but because the magnitudes of the diseases are so different then those with low number of cases won't be visible.
 #The faceted linegraphs show the trend more accurately but at a cost of not being as collective as the streamgraph.However, their simple design might be very helpful in conveying the information. 
+
+## JD: This was certainly a lot of work! The main image is visually cool, but I'm not convinced it is good dataviz. I had trouble seeing the streamgraph widget in both R and rstudio. I will record that you finished this assignment satisfactorily, and we can move on.

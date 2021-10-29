@@ -49,7 +49,7 @@ map3 <- (ggmap(basemap) +
                                             size=Count, group=Stocking_Year),alpha=0.3))+
   scale_colour_brewer(palette="Set1")+
   scale_size(range = c(.1, 16), name="Count")+
-  guides(color = guide_legend(override.aes = list(size=5)))+
+  guides(color = guide_legend(override.aes = list(size=10)))+
   transition_time(Stocking_Year)+
   ggtitle('Year: {frame_time}',
           subtitle = 'Frame {frame} of {nframes}')

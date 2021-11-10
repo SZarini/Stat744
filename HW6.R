@@ -26,6 +26,8 @@ map1 <- (ggmap(basemap) +
 num_years <- max(fish_data$Stocking_Year) - min(fish_data$Stocking_Year) + 1
 animate(map1, nframes = num_years, height = 800, width =800, fps=0.5)
 
+## JD: Looks like you have warnings here. You could try dropping zeroes.
+## You could also pick a better color scale. I like the use of log, though.
 
 #A heatmap which shows most of stocking has been happening near Ottawa and Toronto
 heatdata <- select(fish_data, c('X','Y','Number_of_Fish_Stocked' ))
@@ -33,13 +35,13 @@ heatdata <- select(fish_data, c('X','Y','Number_of_Fish_Stocked' ))
 (map2 <- ggmap(basemap)  #I am not sure what the numbers in the legend are representing!
   + stat_density_2d(data=heatdata,
                     aes(x = X, y = Y, fill=..level..), geom = "polygon",
-                    alpha = .35, colour = NA)
-  + scale_fill_gradient2("Fish stocking\nheatmap",
-                         low = "white", mid = "yellow",
+                    alpha = .35, colour = NA) + scale_fill_gradient2("Fish stocking\nheatmap", low = "white", mid = "yellow",
                          high = "red")
 )
 
-#Showing the stocking pattern for Trout species
+## JD: Was I supposed to look at map2? It's not printed or animated afaict.
+## The numbers are density estimates bases on the units you gave it for x and y. You can read more about stat_density_2d(). Smoothed incidents per squared degree, or something crazy like that. Thanks for point it out instead of sneaking it past.
+
 Trouts <- fish_data %>% filter(fish_data$Species == 'Rainbow Trout'|
                                  fish_data$Species == 'Brook Trout'|
                                  fish_data$Species == 'Brown Trout'|
@@ -56,3 +58,6 @@ map3 <- (ggmap(basemap) +
 num_years <- max(Trouts$Stocking_Year) - min(Trouts$Stocking_Year) + 1
 animate(map3, nframes = num_years, height = 800, width =800, fps=0.5)
 
+## JD: It's a cool animation, but hard for me to use the rstudio viewer. You should figure out how to save to a file maybe (we have code). Remember to scale sizes by area, especially for concrete things like counts. I'm wondering also whether 
+
+## Grade 2.4/3
